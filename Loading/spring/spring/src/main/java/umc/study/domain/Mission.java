@@ -5,6 +5,7 @@ import umc.study.domain.common.BaseEntity;
 import umc.study.domain.mapping.MemberMission;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,9 +18,12 @@ public class Mission extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
-    private String address;
-    private Float score;
+    @Column(nullable = false, length = 20)
+    private String missionSpec;
+    @Column(nullable = false)
+    private Integer reward;
+    @Column(nullable = false, length = 6)
+    private LocalDate deadline;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "store_id")

@@ -19,6 +19,7 @@ public class BuySales extends BaseEntity {
     private Long id;
 
     @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "VARCHAR(10)")
     private BuyStatus status;
 
     @OneToOne(fetch = FetchType.LAZY)

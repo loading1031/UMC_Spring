@@ -20,8 +20,9 @@ public class Store extends BaseEntity {
     private String name;
     private String address;
     private Float score;
-    //추가
+    // 추가
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "region_id")
     private Region region;
+
 }

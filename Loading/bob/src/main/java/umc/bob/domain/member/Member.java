@@ -42,6 +42,7 @@ public class Member extends BaseEntity {
     @Column(columnDefinition = "VARCHAR(15) DEFAULT 'ACTIVE'")
     private MemberStatus status;
 
+    @Column(nullable = true, length = 6)
     private LocalDate inactiveDate;
 
     @Column(nullable = false, length = 50)

@@ -17,7 +17,7 @@ public class PointHistory extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @Column(nullable = false)
     private Integer change;
 
     @ManyToOne(fetch = FetchType.LAZY)
