@@ -15,13 +15,14 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class RegionCommandServiceImpl implements RegionCommandService {
-    RegionRepository regionRepository;
+    private final RegionRepository regionRepository;
     @Override
     public Region getRegion(Long regionId) {
         Optional<Region> region = regionRepository.findById(regionId);
         return region.orElseThrow(()->new RegionHandler(ErrorStatus.REGION_NOT_FOUND));
     }
     @Override
+    @Transactional
     public void addStoreList(Region region, Store store) {
         region.addStore(store);
         regionRepository.save(region);
