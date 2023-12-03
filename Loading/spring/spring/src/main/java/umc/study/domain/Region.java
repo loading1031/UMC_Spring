@@ -17,8 +17,13 @@ public class Region extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    /*
+
     @OneToMany(mappedBy = "region", cascade = CascadeType.ALL)
     private List<Store> storeList = new ArrayList<>();
-*/
+    public void addStore(Store store) {
+        this.storeList.add(store);
+    }
+
+
+
 }
