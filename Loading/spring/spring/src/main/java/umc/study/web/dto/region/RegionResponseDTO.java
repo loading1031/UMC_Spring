@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class RegionResponseDTO {
@@ -16,5 +17,6 @@ public class RegionResponseDTO {
         Long regionId;
         String RegionName;
         List<Long> storeList;
+        LocalDateTime updatedAt;
     }
 }
