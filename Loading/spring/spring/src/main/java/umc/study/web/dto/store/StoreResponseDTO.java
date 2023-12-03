@@ -15,6 +15,7 @@ public class StoreResponseDTO {
     public static class JoinResultDTO{
         Long storeId;
         String storeName;
+        Long RegionId;
         LocalDateTime createdAt;
     }
 }

@@ -13,6 +13,7 @@ public class StoreConverter {
         return StoreResponseDTO.JoinResultDTO.builder()
                 .storeId(store.getId())
                 .storeName(store.getName())
+                .RegionId(store.getRegion().getId())
                 .createdAt(LocalDateTime.now())
                 .build();
     }
