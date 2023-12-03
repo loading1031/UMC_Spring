@@ -32,4 +32,9 @@ public class MemberRequestDTO {
         @ExistCategories
         List<Long> preferCtegory;
     }
+    @Getter
+    public static class memberId{
+        @NotNull
+        Long memberId;
+    }
 }

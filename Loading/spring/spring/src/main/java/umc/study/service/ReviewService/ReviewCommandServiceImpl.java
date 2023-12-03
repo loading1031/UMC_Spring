@@ -1,0 +1,34 @@
+package umc.study.service.ReviewService;
+
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import umc.study.converter.review.ReviewConverter;
+import umc.study.domain.Member;
+import umc.study.domain.Review;
+import umc.study.domain.Store;
+import umc.study.repository.ReviewRepository;
+import umc.study.service.MemberService.MemberCommandService;
+import umc.study.service.StoreService.StoreCommandService;
+import umc.study.web.dto.review.ReviewRequestDTO;
+
+import java.util.List;
+
+@Service
+@Transactional(readOnly = true)
+@RequiredArgsConstructor
+public class ReviewCommandServiceImpl implements ReviewCommandService{
+    private final ReviewRepository reviewRepository;
+    private final MemberCommandService memberService;
+    private final StoreCommandService storeService;
+
+    @Override
+    @Transactional
+    public Review toReview(ReviewRequestDTO.ReviewDTO request){
+        Member findMember = memberService.getMember(request.getMemberId());
+        Store findStore = storeService.getStore(request.getStoreId());
+        Review review = ReviewConverter.toReview(request, findMember, findStore);
+
+        return reviewRepository.save(review);
+    }
+}

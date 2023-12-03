@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import umc.study.apiPayload.code.status.ErrorStatus;
 import umc.study.apiPayload.exception.handler.FoodCategoryHandler;
+import umc.study.apiPayload.exception.handler.MemberHandler;
 import umc.study.converter.member.MemberConverter;
 import umc.study.converter.member.MemberPreferConverter;
 import umc.study.domain.FoodCategory;
@@ -15,6 +16,7 @@ import umc.study.repository.MemberRepository;
 import umc.study.web.dto.member.MemberRequestDTO;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -22,7 +24,6 @@ import java.util.stream.Collectors;
 @Transactional(readOnly = true)
 public class MemberCommandServiceImpl implements MemberCommandService{
     private final MemberRepository memberRepository;
-
     private final FoodCategoryRepository foodCategoryRepository;
     @Override
     @Transactional
@@ -39,5 +40,11 @@ public class MemberCommandServiceImpl implements MemberCommandService{
         memberPreferList.forEach(memberPrefer -> {memberPrefer.setMember(newMember);});
 
         return memberRepository.save(newMember);
+    }
+
+    @Override
+    public Member getMember(Long id) {
+        Optional<Member> findMember = memberRepository.findById(id);
+        return findMember.orElseThrow(()->new MemberHandler(ErrorStatus.MEMBER_NOT_FOUND)) ;
     }
 }
