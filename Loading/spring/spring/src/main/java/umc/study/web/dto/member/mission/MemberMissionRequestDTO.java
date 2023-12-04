@@ -1,11 +1,8 @@
 package umc.study.web.dto.member.mission;
 
 import lombok.Getter;
-import umc.study.domain.Member;
-import umc.study.domain.Mission;
-import umc.study.domain.enums.MissionStatus;
+import umc.study.validation.annotation.AcceptMission;
 
-import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 public class MemberMissionRequestDTO {
@@ -14,7 +11,8 @@ public class MemberMissionRequestDTO {
     public static class MemberMissionDTO{
         @NotNull
         Long memberId;
-        @NotNull
+
+        @AcceptMission
         Long missionId;
     }
 }

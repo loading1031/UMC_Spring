@@ -19,7 +19,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("user/missions")
+@RequestMapping("members/missions")
 public class MissionRestController {
     private final MemberQueryService memberQueryService;
     private final MemberCommandService memberCommandService;
