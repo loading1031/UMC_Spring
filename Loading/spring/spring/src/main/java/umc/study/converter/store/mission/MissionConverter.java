@@ -1,4 +1,4 @@
-package umc.study.converter.mission;
+package umc.study.converter.store.mission;
 
 import umc.study.domain.Mission;
 import umc.study.domain.Store;

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import umc.study.apiPayload.code.status.ErrorStatus;
 import umc.study.apiPayload.exception.handler.MissionHandler;
-import umc.study.converter.mission.MissionConverter;
+import umc.study.converter.store.mission.MissionConverter;
 import umc.study.domain.Mission;
 import umc.study.domain.Store;
 import umc.study.repository.MissionRepository;

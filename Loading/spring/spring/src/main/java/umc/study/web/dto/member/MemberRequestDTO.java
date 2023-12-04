@@ -33,7 +33,7 @@ public class MemberRequestDTO {
         List<Long> preferCtegory;
     }
     @Getter
-    public static class memberId{
+    public static class MemberId{
         @NotNull
         Long memberId;
     }

@@ -7,9 +7,11 @@ import lombok.NoArgsConstructor;
 import umc.study.domain.Member;
 import umc.study.domain.Mission;
 import umc.study.domain.enums.MissionStatus;
+import umc.study.domain.mapping.MemberMission;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class MemberMissionResponseDTO {
     @Builder
@@ -22,4 +24,5 @@ public class MemberMissionResponseDTO {
         Long missionId;
         LocalDateTime createdAt;
     }
+
 }

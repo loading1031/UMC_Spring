@@ -1,11 +1,16 @@
 package umc.study.converter.member;
 
+import umc.study.apiPayload.code.status.ErrorStatus;
+import umc.study.domain.enums.MissionStatus;
 import umc.study.domain.enums.Gender;
+import umc.study.domain.enums.MissionStatus;
+import umc.study.domain.mapping.MemberMission;
 import umc.study.web.dto.member.MemberRequestDTO;
 import umc.study.web.dto.member.MemberResponseDTO;
 import umc.study.domain.Member;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 public class MemberConverter {
     public  static MemberResponseDTO.JoinResultDTO toJoinResultDTO(Member member){
@@ -29,5 +34,21 @@ public class MemberConverter {
                 .gender(gender)
                 .memberPreferList(new ArrayList<>())
                 .build();
+    }
+
+    public static List<Long> toChallengeMissionList(Member member){
+        return member.getMemberMissionList().stream()
+                .filter(memberMission ->
+                        memberMission.getStatus()==MissionStatus.CHALLENGING )
+                .map(MemberMission::getId)
+                .toList();
+    }
+
+    public static List<Long> toCompleteMissionList(Member member){
+        return member.getMemberMissionList().stream()
+                .filter(memberMission ->
+                        memberMission.getStatus()==MissionStatus.COMPLETE )
+                .map(MemberMission::getId)
+                .toList();
     }
 }
