@@ -25,5 +25,12 @@ public class MissionResponseDTO {
         Long storeId;
         List<MemberMission> memberMissionList;
     }
+    @Builder
+    @Getter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class MissionListResultDTO{
+        List<Long> missionId;
+    }
 
 }

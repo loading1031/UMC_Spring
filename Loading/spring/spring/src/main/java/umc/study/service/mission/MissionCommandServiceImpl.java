@@ -20,10 +20,13 @@ public class MissionCommandServiceImpl implements MissionCommandService{
     @Override
     @Transactional
     public Mission toMission(MissionRequestDTO.MissionDTO request){
-
+        // 가게 추출
         Store store = storeCommandService.getStore(request.getStoreId());
+        // 미션 추출
         Mission mission = MissionConverter.toMission(request,store);
-
+        // store에 미션 리스트 저장
+        mission.setMission(store);
+        // DB에 미션 저장
         return missionRepository.save(mission);
     }
 }

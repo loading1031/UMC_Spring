@@ -24,4 +24,9 @@ public class MissionRequestDTO {
         //@NoExistMission
         //List<MemberMission> memberMissionList;
     }
+    @Getter
+    public static class MissionListDTO{
+        @NotNull
+        Long storeId;
+    }
 }

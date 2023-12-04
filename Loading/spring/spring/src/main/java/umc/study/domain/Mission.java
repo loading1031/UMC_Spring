@@ -31,4 +31,15 @@ public class Mission extends BaseEntity {
 
     @OneToMany(mappedBy = "mission", cascade = CascadeType.ALL)
     private List<MemberMission> memberMissionList = new ArrayList<>();
+
+    public void setMission(Store store){
+        if(this.store != null){
+            this.store.getMissionList().remove(this);
+        } // 미션 정보를 만들었는데, 상점 정보가 있어.
+        // 그러면, 해당 상점 미션리스트에서 이 미션을 일단 빼(초기화)
+        this.store=store;
+        // 상점 정보를 다시 세팅해주고
+        this.store.getMissionList().add(this);
+        // 해당 상점에 다시 미션 추가해줌.
+    }
 }

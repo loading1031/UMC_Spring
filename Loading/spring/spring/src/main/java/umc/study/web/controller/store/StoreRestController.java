@@ -49,4 +49,10 @@ public class StoreRestController {
         Mission mission = missionCommandService.toMission(request);
         return ApiResponse.onSuccess(MissionConverter.toMissionResultDTO(mission));
     }
+
+    @GetMapping("/showMission")
+    public ApiResponse<MissionResponseDTO.MissionListResultDTO> show(@RequestParam("storeId") @Valid Long storeId){
+        Store store = storeCommandService.getStore(storeId);
+        return ApiResponse.onSuccess(MissionConverter.toMissionListResultDTO(store));
+    }
 }
