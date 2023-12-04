@@ -26,6 +26,7 @@ public class MemberConverter {
                 .address(request.getAddress())
                 .specAddress(request.getSpecAddress())
                 .name(request.getName())
+                .gender(gender)
                 .memberPreferList(new ArrayList<>())
                 .build();
     }
