@@ -4,6 +4,7 @@ import lombok.*;
 import umc.study.domain.common.BaseEntity;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,8 +18,12 @@ public class Region extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    /*
+
     @OneToMany(mappedBy = "region", cascade = CascadeType.ALL)
     private List<Store> storeList = new ArrayList<>();
-*/
+    public void addStore(Store store) {
+        this.storeList.add(store);
+        super.setUpdatedAt(LocalDateTime.now());
+        // 업데이트 시간 변경
+    }
 }
