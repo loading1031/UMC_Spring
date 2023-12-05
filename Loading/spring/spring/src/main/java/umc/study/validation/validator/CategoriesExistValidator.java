@@ -19,7 +19,7 @@ public class CategoriesExistValidator implements ConstraintValidator<ExistCatego
     @Override
     public boolean isValid(List<Long> values, ConstraintValidatorContext context) {
         boolean isValid = values.stream()
-                .allMatch(value -> memberCommandService.isExistCategorry(value));
+                .allMatch(value -> memberCommandService.isExistCategory(value));
 
         if (!isValid) {
             context.disableDefaultConstraintViolation();

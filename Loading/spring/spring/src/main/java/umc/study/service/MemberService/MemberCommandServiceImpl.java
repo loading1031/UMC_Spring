@@ -16,6 +16,7 @@ import umc.study.repository.MemberRepository;
 import umc.study.web.dto.member.MemberRequestDTO;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -49,7 +50,15 @@ public class MemberCommandServiceImpl implements MemberCommandService{
     }
 
     @Override
-    public boolean isExistCategorry(Long foodCategory) {
+    public boolean isExistCategory(Long foodCategory) {
         return foodCategoryRepository.existsById(foodCategory);
+    }
+
+    @Override
+    public boolean isAcceptMission(Long memberId, Long missionId) {
+        Member member = this.getMember(memberId);
+
+       return  member.getMemberMissionList().stream()
+                .anyMatch(memberMission -> Objects.equals(memberMission.getMission().getId(), missionId));
     }
 }
