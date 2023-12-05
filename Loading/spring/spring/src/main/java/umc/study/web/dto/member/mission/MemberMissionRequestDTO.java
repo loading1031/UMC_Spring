@@ -9,10 +9,14 @@ public class MemberMissionRequestDTO {
 
     @Getter
     public static class MemberMissionDTO{
+        @AcceptMission
+        FkList memberId_missionId;
+    }
+    @Getter
+    public static class FkList{
         @NotNull
         Long memberId;
-
-        @AcceptMission
+        @NotNull
         Long missionId;
     }
 }

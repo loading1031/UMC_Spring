@@ -7,6 +7,6 @@ import umc.study.web.dto.member.MemberRequestDTO;
 public interface MemberCommandService {
     public Member joinMember(MemberRequestDTO.JoinDTO request);
     public Member getMember(Long id);
-
-    public boolean isExistCategorry(Long foodCategory);
+    public boolean isExistCategory(Long foodCategory);
+    public boolean isAcceptMission(Long memberId, Long missionId);
 }
