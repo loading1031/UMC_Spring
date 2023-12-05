@@ -6,4 +6,5 @@ import umc.study.web.dto.member.mission.MemberMissionRequestDTO;
 
 public interface MemberQueryService {
     public MemberMission acceptMission(MemberMissionRequestDTO.MemberMissionDTO request);
+    public boolean isAcceptMssion(Long id);
 }

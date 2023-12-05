@@ -1,6 +1,7 @@
 package umc.study.web.controller.member;
 
 
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import umc.study.apiPayload.ApiResponse;
@@ -23,9 +24,12 @@ import java.util.List;
 @RequestMapping("/members")
 public class MemberRestController {
     private final MemberCommandService memberCommandService;
-    @PostMapping("/")
-    public ApiResponse<MemberResponseDTO.JoinResultDTO> join(@RequestBody @Valid MemberRequestDTO.JoinDTO request){
+    @PostMapping("")
+    @ApiOperation(value = "Join a new member", notes = "API to join a new member")
+    public ApiResponse<MemberResponseDTO.JoinResultDTO>
+    memberJoin(@RequestBody @Valid MemberRequestDTO.JoinDTO request){
         Member member = memberCommandService.joinMember(request);
         return ApiResponse.onSuccess(MemberConverter.toJoinResultDTO(member));
     }
+
 }
