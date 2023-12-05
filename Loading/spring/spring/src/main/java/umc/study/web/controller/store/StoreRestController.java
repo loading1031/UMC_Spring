@@ -28,11 +28,14 @@ public class StoreRestController {
     private final StoreCommandService storeCommandService;
     private final ReviewCommandService reviewCommandService;
     private final MissionCommandService missionCommandService;
-    @PostMapping("/")
-    public ApiResponse<StoreResponseDTO.JoinResultDTO> join(@RequestBody @Valid StoreRequestDTO.JoinDTO request){
+
+    @PostMapping("")
+    public ApiResponse<StoreResponseDTO.JoinResultDTO>
+    storeJoin(@RequestBody @Valid StoreRequestDTO.JoinDTO request){
         Store store = storeCommandService.joinStore(request);
         return ApiResponse.onSuccess(StoreConverter.toJoinResultDTO(store));
     }
+
     @PostMapping("/Review/create")
     public ApiResponse<ReviewResponseDTO.ReviewResultDTO> write(@RequestBody @Valid ReviewRequestDTO.ReviewDTO request){
         Review review = reviewCommandService.toReview(request);

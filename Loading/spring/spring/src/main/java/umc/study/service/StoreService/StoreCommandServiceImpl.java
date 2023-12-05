@@ -41,4 +41,9 @@ public class StoreCommandServiceImpl implements StoreCommandService {
         return store.orElseThrow(()->new StoreHandler(ErrorStatus.STORE_NOT_EXIST));
     }
 
+    @Override
+    public boolean isStore(Long id) {
+        return storeRepository.existsById(id);
+    }
+
 }

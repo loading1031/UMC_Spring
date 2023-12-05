@@ -28,4 +28,9 @@ public class MemberQueryServiceImpl implements MemberQueryService {
         memberMission.setMemberMission(member,mission);
         return memberMissionRepository.save(memberMission);
     }
+
+    @Override
+    public boolean isAcceptMssion(Long memberId) {
+        return memberMissionRepository.existsById(memberId);
+    }
 }

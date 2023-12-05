@@ -47,4 +47,9 @@ public class MemberCommandServiceImpl implements MemberCommandService{
         Optional<Member> findMember = memberRepository.findById(id);
         return findMember.orElseThrow(()->new MemberHandler(ErrorStatus.MEMBER_NOT_FOUND)) ;
     }
+
+    @Override
+    public boolean isExistCategorry(Long foodCategory) {
+        return foodCategoryRepository.existsById(foodCategory);
+    }
 }

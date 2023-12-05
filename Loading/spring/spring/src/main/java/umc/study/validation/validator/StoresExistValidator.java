@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import umc.study.apiPayload.code.status.ErrorStatus;
 import umc.study.repository.StoreRepository;
+import umc.study.service.StoreService.StoreCommandService;
 import umc.study.validation.annotation.ExistStores;
 
 import javax.validation.ConstraintValidator;
@@ -13,12 +14,12 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class StoresExistValidator implements ConstraintValidator<ExistStores, List<Long>> {
-    private final StoreRepository storeRepository;
+    private final StoreCommandService storeCommandService;
 
     @Override
     public boolean isValid(List<Long> values, ConstraintValidatorContext context) {
         boolean isValid = !values.stream()
-                .allMatch(storeRepository::existsById);
+                .allMatch(storeCommandService::isStore);
 
         if (!isValid) {
             context.disableDefaultConstraintViolation();
