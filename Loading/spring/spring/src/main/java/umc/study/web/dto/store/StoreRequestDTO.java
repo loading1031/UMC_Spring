@@ -20,8 +20,6 @@ public class StoreRequestDTO {
         @NotBlank
         String address;
         @NotNull
-        Float score;
-        @NotNull
         Long regionId;
     }
 }

@@ -34,13 +34,11 @@ public class StoreCommandServiceImpl implements StoreCommandService {
         // 지역에 가게 추가
         return storeRepository.save(store);
     }
-
     @Override
     public Store getStore(Long id) {
         Optional<Store> store = storeRepository.findById(id);
         return store.orElseThrow(()->new StoreHandler(ErrorStatus.STORE_NOT_EXIST));
     }
-
     @Override
     public boolean isStore(Long id) {
         return storeRepository.existsById(id);

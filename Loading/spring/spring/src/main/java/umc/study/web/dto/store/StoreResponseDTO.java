@@ -18,4 +18,13 @@ public class StoreResponseDTO {
         Long RegionId;
         LocalDateTime createdAt;
     }
+
+    public class ReviewPreViewListDTO {
+        List<ReviewPreViewDTO> reviewList;
+        Integer listSize;
+        Integer totalPage;
+        Long totalElements;
+        Boolean isFirst;
+        Boolean isLast;
+    }
 }

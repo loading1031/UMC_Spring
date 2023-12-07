@@ -20,7 +20,6 @@ public class StoreConverter {
     public static Store toStore(StoreRequestDTO.JoinDTO request, Region region){
         return Store.builder()
                 .address(request.getAddress())
-                .score(request.getScore())
                 .name(request.getName())
                 .region(region)
                 .missionList(new ArrayList<>())

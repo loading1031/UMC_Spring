@@ -6,6 +6,7 @@ import umc.study.domain.common.BaseEntity;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Getter
@@ -29,4 +30,15 @@ public class Store extends BaseEntity {
 
     @OneToMany(mappedBy = "store", cascade = CascadeType.ALL)
     private List<Review> reviewList = new ArrayList<>();
+
+    public void setScore(Review review){
+        boolean isReview =
+                this.reviewList.stream().anyMatch(review1 -> Objects.equals(review1.getId(), review.getId()));
+        if(!isReview) this.reviewList.add(review);
+
+        float sum = (float) reviewList.stream()
+                    .mapToDouble(Review::getScore)
+                    .sum();
+        this.score = sum/this.reviewList.size();
+    }
 }

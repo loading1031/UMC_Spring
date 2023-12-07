@@ -1,6 +1,8 @@
 package umc.study.service.ReviewService;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import umc.study.converter.review.ReviewConverter;
@@ -29,6 +31,14 @@ public class ReviewCommandServiceImpl implements ReviewCommandService{
         Store findStore = storeService.getStore(request.getStoreId());
         Review review = ReviewConverter.toReview(request, findMember, findStore);
 
+        review.setReview(findMember,findStore);
+        findStore.setScore(review);
+
         return reviewRepository.save(review);
+    }
+
+    @Override
+    public Page<Review> findAllByStore(Store store, PageRequest pageRequest) {
+        return reviewRepository.findAllByStore(store, pageRequest);
     }
 }
