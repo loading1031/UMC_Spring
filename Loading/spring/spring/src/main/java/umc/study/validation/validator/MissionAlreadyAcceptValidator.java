@@ -17,7 +17,7 @@ public class MissionAlreadyAcceptValidator implements ConstraintValidator<Accept
     @Override
     public boolean isValid(Long value, ConstraintValidatorContext context) {
         boolean isValid  = !memberQueryService.isAcceptMssion(value);
-        // 해당 ID가 유저수락테이블에 있는지 확인
+        // 해당 미션 ID가 유저수락테이블에 있는지 확인
 
         if (isValid) {
             context.disableDefaultConstraintViolation();

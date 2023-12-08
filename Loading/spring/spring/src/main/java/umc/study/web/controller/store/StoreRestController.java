@@ -1,21 +1,26 @@
 package umc.study.web.controller.store;
 
-import io.swagger.annotations.ApiResponses;
+//import io.swagger.annotations.ApiResponses; -> 아래걸로 안하면 에러 발생
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 import umc.study.apiPayload.ApiResponse;
 import umc.study.converter.store.mission.MissionConverter;
-import umc.study.converter.review.ReviewConverter;
 import umc.study.converter.store.StoreConverter;
 import umc.study.domain.Mission;
 import umc.study.domain.Review;
 import umc.study.domain.Store;
 import umc.study.service.ReviewService.ReviewCommandService;
 import umc.study.service.StoreService.StoreCommandService;
+import umc.study.service.StoreService.StoreQueryService;
 import umc.study.service.missionService.MissionCommandService;
+import umc.study.validation.annotation.ExistStore;
 import umc.study.web.dto.mission.MissionRequestDTO;
 import umc.study.web.dto.mission.MissionResponseDTO;
 import umc.study.web.dto.review.ReviewRequestDTO;
@@ -32,6 +37,7 @@ public class StoreRestController {
     private final StoreCommandService storeCommandService;
     private final ReviewCommandService reviewCommandService;
     private final MissionCommandService missionCommandService;
+    private final StoreQueryService storeQueryService;
 
     @PostMapping("")
     public ApiResponse<StoreResponseDTO.JoinResultDTO>
@@ -40,18 +46,18 @@ public class StoreRestController {
         return ApiResponse.onSuccess(StoreConverter.toJoinResultDTO(store));
     }
 
-    @PostMapping("/Review/create")
-    public ApiResponse<ReviewResponseDTO.ReviewResultDTO> write(@RequestBody @Valid ReviewRequestDTO.ReviewDTO request){
+    @PostMapping("/review")
+    public ApiResponse<StoreResponseDTO.CreateReviewResultDTO> write(@RequestBody @Valid StoreRequestDTO.ReveiwDTO request){
         Review review = reviewCommandService.toReview(request);
-        return ApiResponse.onSuccess(ReviewConverter.toReviewResultDTO(review));
+        return ApiResponse.onSuccess(StoreConverter.reviewPreViewDTO(review));
     }
 
-    @GetMapping("/Mission")
+    @GetMapping("/mission")
     public ApiResponse<MissionResponseDTO.MissionListResultDTO> show(@RequestParam("storeId") @Valid Long storeId){
         Store store = storeCommandService.getStore(storeId);
         return ApiResponse.onSuccess(MissionConverter.toMissionListResultDTO(store));
     }
-    @PostMapping("/Mission/create")
+    @PostMapping("/mission")
     public ApiResponse<MissionResponseDTO.MissionResultDTO> make(@RequestBody @Valid MissionRequestDTO.MissionDTO request){
         Mission mission = missionCommandService.toMission(request);
         return ApiResponse.onSuccess(MissionConverter.toMissionResultDTO(mission));
@@ -69,7 +75,7 @@ public class StoreRestController {
             @Parameter(name = "page", description = "페이지 번호, 0번이 1 페이지 입니다."),
     })
     public ApiResponse<StoreResponseDTO.ReviewPreViewListDTO> getReviewList(@ExistStore @PathVariable(name = "storeId") Long storeId, @RequestParam(name = "page") Integer page){
-        storeQueryService.getReviewList(storeId,page);
-        return null;
+        Page<Review> reviewList = storeQueryService.getReviewList(storeId, page);
+        return ApiResponse.onSuccess(StoreConverter.reviewPreViewListDTO(reviewList));
     }
 }

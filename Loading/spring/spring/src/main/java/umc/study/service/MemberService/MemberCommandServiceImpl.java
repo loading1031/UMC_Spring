@@ -29,7 +29,7 @@ public class MemberCommandServiceImpl implements MemberCommandService{
     @Transactional
     public Member joinMember(MemberRequestDTO.JoinDTO request){
         Member newMember = MemberConverter.toMember(request);
-        List<FoodCategory> foodCategoryList = request.getPreferCtegory().stream()
+        List<FoodCategory> foodCategoryList = request.getPreferCategory().stream()
                 .map(category->{
                     return foodCategoryRepository.findById(category).orElseThrow(()->
                             new FoodCategoryHandler(ErrorStatus.FOOD_CATEGORY_NOT_FOUND));

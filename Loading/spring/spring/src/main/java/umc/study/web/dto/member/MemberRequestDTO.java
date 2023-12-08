@@ -30,7 +30,7 @@ public class MemberRequestDTO {
         @Size(min=5,max=12)
         String specAddress;
         @ExistCategories
-        List<Long> preferCtegory;
+        List<Long> preferCategory;
     }
     @Getter
     public static class MemberId{

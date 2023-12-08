@@ -2,6 +2,12 @@ package umc.study.web.controller.member;
 
 
 import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import umc.study.apiPayload.ApiResponse;
@@ -24,8 +30,18 @@ import java.util.List;
 @RequestMapping("/members")
 public class MemberRestController {
     private final MemberCommandService memberCommandService;
+    @Operation(summary = "Join a new member API",description = "API to join a new member")
+    @Parameters({
+            @Parameter(name = "name", description = "유저명"),
+            @Parameter(name = "gender", description = "성별"),
+            @Parameter(name = "birthYear", description = "생년"),
+            @Parameter(name = "birthMonth", description = "생월"),
+            @Parameter(name = "birthDay", description = "생일"),
+            @Parameter(name = "address", description = "주소"),
+            @Parameter(name = "specAddress", description = "상세주소"),
+            @Parameter(name = "preferCategory", description = "음식 선호 카테고리"),
+    })
     @PostMapping("")
-    @ApiOperation(value = "Join a new member", notes = "API to join a new member")
     public ApiResponse<MemberResponseDTO.JoinResultDTO>
     memberJoin(@RequestBody @Valid MemberRequestDTO.JoinDTO request){
         Member member = memberCommandService.joinMember(request);

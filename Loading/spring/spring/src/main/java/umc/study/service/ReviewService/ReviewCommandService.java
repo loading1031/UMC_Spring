@@ -6,8 +6,10 @@ import org.springframework.transaction.annotation.Transactional;
 import umc.study.domain.Review;
 import umc.study.domain.Store;
 import umc.study.web.dto.review.ReviewRequestDTO;
+import umc.study.web.dto.store.StoreRequestDTO;
+import umc.study.web.dto.store.StoreResponseDTO;
 
 public interface ReviewCommandService {
-    Review toReview(ReviewRequestDTO.ReviewDTO request);
+    Review toReview(StoreRequestDTO.ReveiwDTO request);
     Page<Review> findAllByStore(Store store, PageRequest pageRequest);
 }

@@ -22,4 +22,17 @@ public class StoreRequestDTO {
         @NotNull
         Long regionId;
     }
+    @Getter
+    public static class ReveiwDTO {
+        @NotBlank
+        String title;
+        @NotNull
+        Float score;
+        @NotBlank
+        String body;
+        @NotNull
+        Long memberId;
+        @NotNull
+        Long storeId;
+    }
 }
