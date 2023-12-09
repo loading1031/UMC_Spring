@@ -21,7 +21,6 @@ public class MissionRequestDTO {
         LocalDate deadline;
         @NotNull
         Long storeId;
-
     }
     @Getter
     public static class MissionListDTO{

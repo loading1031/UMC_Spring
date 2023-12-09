@@ -8,6 +8,7 @@ import umc.study.validation.annotation.ExistCategories;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +33,17 @@ public class StoreRequestDTO {
         String body;
         @NotNull
         Long memberId;
+        @NotNull
+        Long storeId;
+    }
+    @Getter
+    public static class MissionDTO{
+        @NotBlank
+        String missionSpec;
+        @NotNull
+        Integer reward;
+        @NotNull
+        LocalDate deadline;
         @NotNull
         Long storeId;
     }
