@@ -16,15 +16,12 @@ import umc.study.converter.store.StoreConverter;
 import umc.study.domain.Mission;
 import umc.study.domain.Review;
 import umc.study.domain.Store;
-import umc.study.service.ReviewService.ReviewCommandService;
 import umc.study.service.StoreService.StoreCommandService;
 import umc.study.service.StoreService.StoreQueryService;
 import umc.study.service.missionService.MissionCommandService;
 import umc.study.validation.annotation.ExistStore;
 import umc.study.web.dto.mission.MissionRequestDTO;
 import umc.study.web.dto.mission.MissionResponseDTO;
-import umc.study.web.dto.review.ReviewRequestDTO;
-import umc.study.web.dto.review.ReviewResponseDTO;
 import umc.study.web.dto.store.StoreRequestDTO;
 import umc.study.web.dto.store.StoreResponseDTO;
 
@@ -35,7 +32,6 @@ import javax.validation.Valid;
 @RequestMapping("/stores")
 public class StoreRestController {
     private final StoreCommandService storeCommandService;
-    private final ReviewCommandService reviewCommandService;
     private final MissionCommandService missionCommandService;
     private final StoreQueryService storeQueryService;
 
@@ -45,13 +41,11 @@ public class StoreRestController {
         Store store = storeCommandService.joinStore(request);
         return ApiResponse.onSuccess(StoreConverter.toJoinResultDTO(store));
     }
-
     @PostMapping("/review")
     public ApiResponse<StoreResponseDTO.CreateReviewResultDTO> write(@RequestBody @Valid StoreRequestDTO.ReveiwDTO request){
-        Review review = reviewCommandService.toReview(request);
-        return ApiResponse.onSuccess(StoreConverter.reviewPreViewDTO(review));
+        Review review = storeQueryService.toReview(request);
+        return ApiResponse.onSuccess(StoreConverter.toCreateReviewResultDTO(review));
     }
-
     @GetMapping("/mission")
     public ApiResponse<MissionResponseDTO.MissionListResultDTO> show(@RequestParam("storeId") @Valid Long storeId){
         Store store = storeCommandService.getStore(storeId);
