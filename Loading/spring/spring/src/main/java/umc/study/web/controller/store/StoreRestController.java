@@ -20,8 +20,6 @@ import umc.study.service.StoreService.StoreCommandService;
 import umc.study.service.StoreService.StoreQueryService;
 import umc.study.service.missionService.MissionCommandService;
 import umc.study.validation.annotation.ExistStore;
-import umc.study.web.dto.mission.MissionRequestDTO;
-import umc.study.web.dto.mission.MissionResponseDTO;
 import umc.study.web.dto.store.StoreRequestDTO;
 import umc.study.web.dto.store.StoreResponseDTO;
 
@@ -46,15 +44,15 @@ public class StoreRestController {
         Review review = storeQueryService.toReview(request);
         return ApiResponse.onSuccess(StoreConverter.toCreateReviewResultDTO(review));
     }
-    @GetMapping("/mission")
-    public ApiResponse<MissionResponseDTO.MissionListResultDTO> show(@RequestParam("storeId") @Valid Long storeId){
-        Store store = storeCommandService.getStore(storeId);
-        return ApiResponse.onSuccess(MissionConverter.toMissionListResultDTO(store));
+    @GetMapping("/{storeId}/mission")
+    public ApiResponse<StoreResponseDTO.MissionPreViewListDTO> show(@ExistStore @PathVariable("storeId")Long storeId, Integer page){
+        Page<Mission>missionList = storeQueryService.getMissionList(storeId,page);
+        return ApiResponse.onSuccess(MissionConverter.missionPreViewListDTO(missionList));
     }
     @PostMapping("/mission")
-    public ApiResponse<MissionResponseDTO.MissionResultDTO> make(@RequestBody @Valid MissionRequestDTO.MissionDTO request){
+    public ApiResponse<StoreResponseDTO.CreateMissionResultDTO> make(@RequestBody @Valid StoreRequestDTO.MissionDTO request){
         Mission mission = missionCommandService.toMission(request);
-        return ApiResponse.onSuccess(MissionConverter.toMissionResultDTO(mission));
+        return ApiResponse.onSuccess(MissionConverter.createMissionResultDTO(mission));
     }
     @Operation(summary = "특정 가게의 리뷰 목록 조회 API",description = "특정 가게의 리뷰들의 목록을 조회하는 API이며, 페이징을 포함합니다. query String 으로 page 번호를 주세요")
     @GetMapping("/{storeId}/reviews")

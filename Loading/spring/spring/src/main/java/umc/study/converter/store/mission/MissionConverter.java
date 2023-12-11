@@ -1,16 +1,18 @@
 package umc.study.converter.store.mission;
 
+import org.springframework.data.domain.Page;
 import umc.study.domain.Mission;
 import umc.study.domain.Store;
-import umc.study.web.dto.mission.MissionRequestDTO;
-import umc.study.web.dto.mission.MissionResponseDTO;
+import umc.study.web.dto.store.StoreRequestDTO;
+import umc.study.web.dto.store.StoreResponseDTO;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class MissionConverter {
-    public static Mission toMission(MissionRequestDTO.MissionDTO request, Store store){
+    public static Mission toMission(StoreRequestDTO.MissionDTO request, Store store){
         return Mission.builder()
                 .missionSpec(request.getMissionSpec())
                 .store(store)
@@ -19,27 +21,35 @@ public class MissionConverter {
                 .reward(request.getReward())
                 .build();
     }
-
-    public static MissionResponseDTO.MissionResultDTO toMissionResultDTO(Mission mission){
-        return MissionResponseDTO.MissionResultDTO.builder()
+    public static StoreResponseDTO.CreateMissionResultDTO createMissionResultDTO(Mission mission){
+        return StoreResponseDTO.CreateMissionResultDTO.builder()
                 .missionId(mission.getId())
-                .storeId(mission.getStore().getId())
+                .createdAt(LocalDateTime.now())
+                .build();
+    }
+    public static StoreResponseDTO.MissionPreViewDTO missionPreViewDTO(Mission mission){
+        return StoreResponseDTO.MissionPreViewDTO.builder()
+                .missionSpec(mission.getMissionSpec())
+                .storeName(mission.getStore().getName())
                 .reward(mission.getReward())
                 .deadline(mission.getDeadline())
-                .missionSpec(mission.getMissionSpec())
-                .memberMissionList(new ArrayList<>())
+                .createdAt(mission.getCreatedAt())
+                .build();
+    }
+    public static  StoreResponseDTO.MissionPreViewListDTO missionPreViewListDTO(Page<Mission>missionList){
+
+        List<StoreResponseDTO.MissionPreViewDTO> missionPreviewList =
+                missionList.stream()
+                .map(MissionConverter::missionPreViewDTO)
+                .toList();
+        return StoreResponseDTO.MissionPreViewListDTO.builder()
+                .missionList(missionPreviewList)
+                .listSize(missionList.getSize())
+                .isFirst(missionList.isFirst())
+                .totalPage(missionList.getTotalPages())
+                .totalElements(missionList.getTotalElements())
                 .build();
     }
 
-    public static  MissionResponseDTO.MissionListResultDTO toMissionListResultDTO(Store store){
 
-        return MissionResponseDTO.MissionListResultDTO.builder()
-                .missionId(
-                        store.getMissionList().stream()
-                        .map(Mission::getId)
-                        .collect(Collectors.toList())
-                )
-                .build();
-
-    }
 }

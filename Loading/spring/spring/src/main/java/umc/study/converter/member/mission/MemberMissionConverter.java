@@ -2,17 +2,16 @@ package umc.study.converter.member.mission;
 
 import umc.study.domain.Member;
 import umc.study.domain.Mission;
-import umc.study.domain.enums.Gender;
 import umc.study.domain.enums.MissionStatus;
 import umc.study.domain.mapping.MemberMission;
-import umc.study.web.dto.member.mission.MemberMissionRequestDTO;
-import umc.study.web.dto.member.mission.MemberMissionResponseDTO;
+import umc.study.web.dto.member.MemberResponseDTO;
+
 
 import javax.print.DocFlavor;
 import java.time.LocalDateTime;
 
 public class MemberMissionConverter {
-    public static MemberMission toMemberMission(MemberMissionRequestDTO.MemberMissionDTO request, Mission mission, Member member){
+    public static MemberMission toMemberMission(Mission mission, Member member){
 
         return MemberMission.builder()
                 .mission(mission)
@@ -21,11 +20,10 @@ public class MemberMissionConverter {
                 .build();
     }
 
-    public static MemberMissionResponseDTO.MemberMissionResultDTO toMemberMissionDTO(MemberMission request){
+    public static MemberResponseDTO.AcceptMissionResultDTO toMemberMissionDTO(MemberMission request){
 
-        return MemberMissionResponseDTO.MemberMissionResultDTO.builder()
-                .missionId(request.getMission().getId())
-                .memberId(request.getMember().getId())
+        return MemberResponseDTO.AcceptMissionResultDTO.builder()
+                .memberMissionId(request.getId())
                 .createdAt(LocalDateTime.now())
                 .status(request.getStatus())
                 .build();

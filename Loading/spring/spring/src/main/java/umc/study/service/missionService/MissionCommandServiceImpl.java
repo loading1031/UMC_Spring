@@ -13,7 +13,7 @@ import umc.study.domain.Mission;
 import umc.study.domain.Store;
 import umc.study.repository.MissionRepository;
 import umc.study.service.StoreService.StoreCommandService;
-import umc.study.web.dto.mission.MissionRequestDTO;
+import umc.study.web.dto.store.StoreRequestDTO;
 
 import java.util.Optional;
 
@@ -26,7 +26,7 @@ public class MissionCommandServiceImpl implements MissionCommandService{
     private final StoreCommandService storeCommandService;
     @Override
     @Transactional
-    public Mission toMission(MissionRequestDTO.MissionDTO request){
+    public Mission toMission(StoreRequestDTO.MissionDTO request){
         // 가게 추출
         Store store = storeCommandService.getStore(request.getStoreId());
         // 미션 추출

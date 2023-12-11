@@ -13,7 +13,7 @@ import umc.study.domain.mapping.MemberMission;
 import umc.study.repository.MemberMissionRepository;
 import umc.study.service.ReviewService.ReviewCommandService;
 import umc.study.service.missionService.MissionCommandService;
-import umc.study.web.dto.member.mission.MemberMissionRequestDTO;
+import umc.study.web.dto.member.MemberRequestDTO;
 
 @Service
 @RequiredArgsConstructor
@@ -25,10 +25,10 @@ public class MemberQueryServiceImpl implements MemberQueryService {
     private final ReviewCommandService reviewCommandService;
     @Override
     @Transactional
-    public MemberMission acceptMission(MemberMissionRequestDTO.MemberMissionDTO request) {
+    public MemberMission acceptMission(MemberRequestDTO.AcceptMissionDTO request) {
         Member member = memberCommandService.getMember(request.getMemberId());
         Mission mission = missionCommandService.getMission(request.getMissionId());
-        MemberMission memberMission = MemberMissionConverter.toMemberMission(request,mission,member);
+        MemberMission memberMission = MemberMissionConverter.toMemberMission(mission,member);
         memberMission.setMemberMission(member,mission);
         return memberMissionRepository.save(memberMission);
     }

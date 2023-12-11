@@ -49,7 +49,7 @@ public class StoreResponseDTO {
         String ownerNickname;
         Float score;
         String body;
-        LocalDate createdAt;
+        LocalDateTime createdAt;
     }
     @Builder
     @Getter
@@ -77,9 +77,9 @@ public class StoreResponseDTO {
     @AllArgsConstructor
     public static class MissionPreViewDTO {
         String storeName;
-        LocalDateTime deadline;
+        LocalDate deadline;
         Integer reward;
         String missionSpec;
-        LocalDate createdAt;
+        LocalDateTime createdAt;
     }
 }
