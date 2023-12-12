@@ -5,7 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import umc.study.converter.member.mission.MemberMissionConverter;
+import umc.study.converter.member.MemberMissionConverter;
 import umc.study.domain.Member;
 import umc.study.domain.Mission;
 import umc.study.domain.Review;
@@ -33,8 +33,13 @@ public class MemberQueryServiceImpl implements MemberQueryService {
         return memberMissionRepository.save(memberMission);
     }
     @Override
-    public boolean isAcceptMssion(Long memberId) {
-        return memberMissionRepository.existsById(memberId);
+    public boolean isAcceptMssion(MemberRequestDTO.AcceptMissionDTO request) {
+        System.out.println("실행됨2");
+        Member member = memberCommandService.getMember(request.getMemberId());
+
+        return member.getMemberMissionList().stream()
+                .anyMatch(memberMission -> memberMission.getMission()
+                        .getId().equals(request.getMissionId()));
     }
     @Override
     public Page<Review> getReviewList(Long memberId, Integer page){
@@ -43,4 +48,12 @@ public class MemberQueryServiceImpl implements MemberQueryService {
                 member, PageRequest.of(page,10)
         );
     }
+    @Override
+    public Page<MemberMission> getAcceptMissionList(Long memberId, Integer page){
+        Member member = memberCommandService.getMember(memberId);
+        return memberMissionRepository.findAllByMember(
+                member, PageRequest.of(page,10)
+        );
+    }
+
 }

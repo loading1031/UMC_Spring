@@ -21,13 +21,13 @@ public class MissionConverter {
                 .reward(request.getReward())
                 .build();
     }
-    public static StoreResponseDTO.CreateMissionResultDTO createMissionResultDTO(Mission mission){
+    public static StoreResponseDTO.CreateMissionResultDTO toCreateMissionResultDTO(Mission mission){
         return StoreResponseDTO.CreateMissionResultDTO.builder()
                 .missionId(mission.getId())
                 .createdAt(LocalDateTime.now())
                 .build();
     }
-    public static StoreResponseDTO.MissionPreViewDTO missionPreViewDTO(Mission mission){
+    public static StoreResponseDTO.MissionPreViewDTO toMissionPreViewDTO(Mission mission){
         return StoreResponseDTO.MissionPreViewDTO.builder()
                 .missionSpec(mission.getMissionSpec())
                 .storeName(mission.getStore().getName())
@@ -36,11 +36,11 @@ public class MissionConverter {
                 .createdAt(mission.getCreatedAt())
                 .build();
     }
-    public static  StoreResponseDTO.MissionPreViewListDTO missionPreViewListDTO(Page<Mission>missionList){
+    public static  StoreResponseDTO.MissionPreViewListDTO toMissionPreViewListDTO(Page<Mission>missionList){
 
         List<StoreResponseDTO.MissionPreViewDTO> missionPreviewList =
                 missionList.stream()
-                .map(MissionConverter::missionPreViewDTO)
+                .map(MissionConverter::toMissionPreViewDTO)
                 .toList();
         return StoreResponseDTO.MissionPreViewListDTO.builder()
                 .missionList(missionPreviewList)

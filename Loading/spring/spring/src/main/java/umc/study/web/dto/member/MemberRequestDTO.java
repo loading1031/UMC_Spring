@@ -1,9 +1,6 @@
 package umc.study.web.dto.member;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import umc.study.validation.annotation.AcceptMission;
 import umc.study.validation.annotation.ExistCategories;
 
@@ -37,7 +34,7 @@ public class MemberRequestDTO {
     public static class AcceptMissionDTO{
         @NotNull
         Long memberId;
-        @AcceptMission
+        @NotNull
         Long missionId;
     }
 }

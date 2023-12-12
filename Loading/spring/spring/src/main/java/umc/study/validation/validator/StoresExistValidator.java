@@ -14,14 +14,12 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class StoresExistValidator implements ConstraintValidator<ExistStore, List<Long>> {
+public class StoresExistValidator implements ConstraintValidator<ExistStore, Long> {
     private final StoreCommandService storeCommandService;
 
     @Override
-    public boolean isValid(List<Long> values, ConstraintValidatorContext context) {
-        boolean isValid = !values.stream()
-                .allMatch(storeCommandService::isStore);
-
+    public boolean isValid(Long value, ConstraintValidatorContext context) {
+        boolean isValid = storeCommandService.isStore(value);
         if (!isValid) {
             context.disableDefaultConstraintViolation();
             context.buildConstraintViolationWithTemplate(ErrorStatus.STORE_NOT_EXIST.toString()).addConstraintViolation();

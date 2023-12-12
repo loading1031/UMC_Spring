@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import umc.study.apiPayload.ApiResponse;
 import umc.study.converter.store.mission.MissionConverter;
@@ -25,6 +26,7 @@ import umc.study.web.dto.store.StoreResponseDTO;
 
 import javax.validation.Valid;
 
+@Validated
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/stores")
@@ -32,27 +34,29 @@ public class StoreRestController {
     private final StoreCommandService storeCommandService;
     private final MissionCommandService missionCommandService;
     private final StoreQueryService storeQueryService;
-
+/*
     @PostMapping("")
     public ApiResponse<StoreResponseDTO.JoinResultDTO>
     storeJoin(@RequestBody @Valid StoreRequestDTO.JoinDTO request){
         Store store = storeCommandService.joinStore(request);
         return ApiResponse.onSuccess(StoreConverter.toJoinResultDTO(store));
     }
+ */
     @PostMapping("/review")
     public ApiResponse<StoreResponseDTO.CreateReviewResultDTO> write(@RequestBody @Valid StoreRequestDTO.ReveiwDTO request){
         Review review = storeQueryService.toReview(request);
         return ApiResponse.onSuccess(StoreConverter.toCreateReviewResultDTO(review));
     }
     @GetMapping("/{storeId}/mission")
-    public ApiResponse<StoreResponseDTO.MissionPreViewListDTO> show(@ExistStore @PathVariable("storeId")Long storeId, Integer page){
+    public ApiResponse<StoreResponseDTO.MissionPreViewListDTO>
+    show(@ExistStore @PathVariable("storeId")Long storeId, Integer page){
         Page<Mission>missionList = storeQueryService.getMissionList(storeId,page);
-        return ApiResponse.onSuccess(MissionConverter.missionPreViewListDTO(missionList));
+        return ApiResponse.onSuccess(MissionConverter.toMissionPreViewListDTO(missionList));
     }
     @PostMapping("/mission")
     public ApiResponse<StoreResponseDTO.CreateMissionResultDTO> make(@RequestBody @Valid StoreRequestDTO.MissionDTO request){
         Mission mission = missionCommandService.toMission(request);
-        return ApiResponse.onSuccess(MissionConverter.createMissionResultDTO(mission));
+        return ApiResponse.onSuccess(MissionConverter.toCreateMissionResultDTO(mission));
     }
     @Operation(summary = "특정 가게의 리뷰 목록 조회 API",description = "특정 가게의 리뷰들의 목록을 조회하는 API이며, 페이징을 포함합니다. query String 으로 page 번호를 주세요")
     @GetMapping("/{storeId}/reviews")
