@@ -36,19 +36,4 @@ public class MemberConverter {
                 .build();
     }
 
-    public static List<Long> toChallengeMissionList(Member member){
-        return member.getMemberMissionList().stream()
-                .filter(memberMission ->
-                        memberMission.getStatus()==MissionStatus.CHALLENGING )
-                .map(MemberMission::getId)
-                .toList();
-    }
-
-    public static List<Long> toCompleteMissionList(Member member){
-        return member.getMemberMissionList().stream()
-                .filter(memberMission ->
-                        memberMission.getStatus()==MissionStatus.COMPLETE )
-                .map(MemberMission::getId)
-                .toList();
-    }
 }

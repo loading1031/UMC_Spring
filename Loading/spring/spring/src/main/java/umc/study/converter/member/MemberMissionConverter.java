@@ -37,11 +37,18 @@ public class MemberMissionConverter {
                 .createdAt(request.getCreatedAt())
                 .build();
     }
-    public static MemberResponseDTO.AcceptMissionPreviewListDTO toAcceptMissionPreviewListDTO(Page<MemberMission> request){
-        List<MemberResponseDTO.AcceptMissionPreviewDTO> acceptMissionPreviewList
-                = request.stream()
+    public static List<MemberResponseDTO.AcceptMissionPreviewDTO> acceptMissionPreviewList(Page<MemberMission> request, MissionStatus status){
+        List<MemberResponseDTO.AcceptMissionPreviewDTO> acceptMissionPreviewList = request.stream()
                 .map(MemberMissionConverter::toAcceptMissionPreviewDTO)
                 .toList();
+        if (status==null) return acceptMissionPreviewList;
+        else return acceptMissionPreviewList.stream()
+                .filter(memberMission->memberMission.getStatus().equals(status))
+                .toList();
+    }
+    public static MemberResponseDTO.AcceptMissionPreviewListDTO toAcceptMissionPreviewListDTO(Page<MemberMission> request, MissionStatus status){
+        List<MemberResponseDTO.AcceptMissionPreviewDTO> acceptMissionPreviewList = acceptMissionPreviewList(request,status);
+
         return MemberResponseDTO.AcceptMissionPreviewListDTO.builder()
                 .memberMissionList(acceptMissionPreviewList)
                 .listSize(acceptMissionPreviewList.size())
@@ -50,5 +57,4 @@ public class MemberMissionConverter {
                 .totalPage(request.getTotalPages())
                 .build();
     }
-
 }

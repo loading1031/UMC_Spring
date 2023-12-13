@@ -9,6 +9,7 @@ import umc.study.apiPayload.ApiResponse;
 import umc.study.converter.member.MemberConverter;
 import umc.study.converter.member.MemberMissionConverter;
 import umc.study.domain.Member;
+import umc.study.domain.enums.MissionStatus;
 import umc.study.domain.mapping.MemberMission;
 import umc.study.service.MemberService.MemberCommandService;
 import umc.study.service.MemberService.MemberQueryService;
@@ -28,30 +29,30 @@ public class MissionRestController {
     private final MemberCommandService memberCommandService;
 
     @GetMapping("")
-    public ApiResponse<MemberResponseDTO.AcceptMissionPreviewListDTO> getAcceptMissionList(@PathVariable(name = "memberId") Long memberId, @RequestParam(name = "page") Integer page){
+    public ApiResponse<MemberResponseDTO.AcceptMissionPreviewListDTO> getAcceptMissionList
+            (@PathVariable(name = "memberId") Long memberId, @RequestParam(name = "page") Integer page){
         Page<MemberMission> memberMissionList = memberQueryService.getAcceptMissionList(memberId,page);
-        return ApiResponse.onSuccess(MemberMissionConverter.toAcceptMissionPreviewListDTO(memberMissionList));
+        return ApiResponse.onSuccess(MemberMissionConverter.toAcceptMissionPreviewListDTO(memberMissionList,null));
+    }
+    @GetMapping("/challenge")
+    public ApiResponse<MemberResponseDTO.AcceptMissionPreviewListDTO> getChallengeMissionList
+            (@PathVariable(name = "memberId") Long memberId, @RequestParam(name = "page") Integer page){
+        Page<MemberMission> memberMissionList = memberQueryService.getAcceptMissionList(memberId,page);
+        return ApiResponse.onSuccess(MemberMissionConverter.toAcceptMissionPreviewListDTO(memberMissionList, MissionStatus.CHALLENGING));
     }
 
-    @GetMapping("/challenge")
-    public ApiResponse<List<Long>>challengeShow(@PathVariable("memberId")Long memberId){
-        Member member = memberCommandService.getMember(memberId);
-        return ApiResponse.onSuccess(MemberConverter.toChallengeMissionList(member));
-    }
     @GetMapping("/complete")
-    public ApiResponse<List<Long>>completeShow(@PathVariable("memberId")Long memberId){
-        Member member = memberCommandService.getMember(memberId);
-        return ApiResponse.onSuccess(MemberConverter.toCompleteMissionList(member));
+    public ApiResponse<MemberResponseDTO.AcceptMissionPreviewListDTO> getCompleteMissionList
+            (@PathVariable(name = "memberId") Long memberId, @RequestParam(name = "page") Integer page){
+        Page<MemberMission> memberMissionList = memberQueryService.getAcceptMissionList(memberId,page);
+        return ApiResponse.onSuccess(MemberMissionConverter.toAcceptMissionPreviewListDTO(memberMissionList, MissionStatus.COMPLETE));
     }
     @PostMapping("/accept")
     public ApiResponse<MemberResponseDTO.AcceptMissionResultDTO>acceptMission
             (@PathVariable("memberId")Long memberId,  @RequestBody @Valid @AcceptMission MemberRequestDTO.AcceptMissionDTO request){
 
-        return null;
-        /*
         MemberMission memberMission = memberQueryService.acceptMission(request);
         return ApiResponse.onSuccess(MemberMissionConverter.toAcceptMissionResultDTO(memberMission));
-         */
     }
 }
 
