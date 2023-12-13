@@ -19,11 +19,11 @@ public class StoresExistValidator implements ConstraintValidator<ExistStore, Lon
 
     @Override
     public boolean isValid(Long value, ConstraintValidatorContext context) {
-        boolean isValid = storeCommandService.isStore(value);
-        if (!isValid) {
+        boolean valid = storeCommandService.isStore(value);
+        if (!valid) {
             context.disableDefaultConstraintViolation();
             context.buildConstraintViolationWithTemplate(ErrorStatus.STORE_NOT_EXIST.toString()).addConstraintViolation();
         }
-        return isValid;
+        return valid;
     }
 }
