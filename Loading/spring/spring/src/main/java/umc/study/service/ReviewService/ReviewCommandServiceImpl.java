@@ -12,9 +12,7 @@ import umc.study.domain.Store;
 import umc.study.repository.ReviewRepository;
 import umc.study.service.MemberService.MemberCommandService;
 import umc.study.service.StoreService.StoreCommandService;
-import umc.study.web.dto.review.ReviewRequestDTO;
 import umc.study.web.dto.store.StoreRequestDTO;
-import umc.study.web.dto.store.StoreResponseDTO;
 
 @Service
 @Transactional(readOnly = true)
@@ -38,5 +36,9 @@ public class ReviewCommandServiceImpl implements ReviewCommandService{
     @Override
     public Page<Review> findAllByStore(Store store, PageRequest pageRequest) {
         return reviewRepository.findAllByStore(store, pageRequest);
+    }
+    @Override
+    public Page<Review> findAllByMember(Member member, PageRequest pageRequest) {
+        return reviewRepository.findAllByMember(member, pageRequest);
     }
 }

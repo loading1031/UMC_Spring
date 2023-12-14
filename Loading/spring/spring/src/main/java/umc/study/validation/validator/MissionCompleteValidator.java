@@ -3,26 +3,25 @@ package umc.study.validation.validator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import umc.study.apiPayload.code.status.ErrorStatus;
-import umc.study.repository.StoreRepository;
-import umc.study.service.StoreService.StoreCommandService;
+import umc.study.domain.enums.MissionStatus;
+import umc.study.service.MemberService.MemberCommandService;
 import umc.study.validation.annotation.ExistStore;
-
+import umc.study.validation.annotation.IsCompleteMission;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
-import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class StoresExistValidator implements ConstraintValidator<ExistStore, Long> {
-    private final StoreCommandService storeCommandService;
-
+public class MissionCompleteValidator implements ConstraintValidator<IsCompleteMission, Long> {
+    private final MemberCommandService memberCommandService;
     @Override
     public boolean isValid(Long value, ConstraintValidatorContext context) {
-        boolean valid = storeCommandService.isStore(value);
+        boolean valid = memberCommandService.getMemberMission(value).
+                getStatus().equals(MissionStatus.CHALLENGING);
         if (!valid) {
             context.disableDefaultConstraintViolation();
-            context.buildConstraintViolationWithTemplate(ErrorStatus.STORE_NOT_EXIST.toString()).addConstraintViolation();
+            context.buildConstraintViolationWithTemplate(ErrorStatus.MISSION_COMPLETE.toString()).addConstraintViolation();
         }
         return valid;
     }

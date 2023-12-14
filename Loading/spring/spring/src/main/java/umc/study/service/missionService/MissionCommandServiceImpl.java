@@ -2,6 +2,8 @@ package umc.study.service.missionService;
 
 //import ch.qos.logback.core.status.ErrorStatus;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import umc.study.apiPayload.code.status.ErrorStatus;
@@ -11,7 +13,7 @@ import umc.study.domain.Mission;
 import umc.study.domain.Store;
 import umc.study.repository.MissionRepository;
 import umc.study.service.StoreService.StoreCommandService;
-import umc.study.web.dto.mission.MissionRequestDTO;
+import umc.study.web.dto.store.StoreRequestDTO;
 
 import java.util.Optional;
 
@@ -24,7 +26,7 @@ public class MissionCommandServiceImpl implements MissionCommandService{
     private final StoreCommandService storeCommandService;
     @Override
     @Transactional
-    public Mission toMission(MissionRequestDTO.MissionDTO request){
+    public Mission toMission(StoreRequestDTO.MissionDTO request){
         // 가게 추출
         Store store = storeCommandService.getStore(request.getStoreId());
         // 미션 추출
@@ -34,10 +36,13 @@ public class MissionCommandServiceImpl implements MissionCommandService{
         // DB에 미션 저장
         return missionRepository.save(mission);
     }
-
     @Override
     public Mission getMission(Long id) {
         Optional<Mission> mission = missionRepository.findById(id);
         return mission.orElseThrow(()-> new MissionHandler(ErrorStatus.MISSION_NOT_EXIST));
+    }
+    @Override
+    public Page<Mission> findAllByStore(Store store, PageRequest pageRequest) {
+        return missionRepository.findAllByStore(store, pageRequest);
     }
 }
