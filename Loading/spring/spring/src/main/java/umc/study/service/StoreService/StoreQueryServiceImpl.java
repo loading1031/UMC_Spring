@@ -8,9 +8,15 @@ import org.springframework.transaction.annotation.Transactional;
 import umc.study.domain.Mission;
 import umc.study.domain.Review;
 import umc.study.domain.Store;
+import umc.study.domain.enums.MissionStatus;
+import umc.study.domain.mapping.MemberMission;
+import umc.study.service.MemberService.MemberCommandService;
+import umc.study.service.MemberService.MemberQueryService;
 import umc.study.service.ReviewService.ReviewCommandService;
 import umc.study.service.missionService.MissionCommandService;
 import umc.study.web.dto.store.StoreRequestDTO;
+
+import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
@@ -19,6 +25,7 @@ public class StoreQueryServiceImpl implements StoreQueryService{
     private final StoreCommandService storeCommandService;
     private final ReviewCommandService reviewCommandService;
     private final MissionCommandService missionCommandService;
+    private final MemberQueryService memberQueryService;
 
     @Override
     public Page<Review> getReviewList(Long storeId, Integer page){
@@ -38,5 +45,10 @@ public class StoreQueryServiceImpl implements StoreQueryService{
     @Transactional
     public Review toReview(StoreRequestDTO.ReveiwDTO request){
         return reviewCommandService.toReview(request);
+    }
+    @Override
+    @Transactional
+    public MemberMission patchMissionStatus(Long memberMissionId) {
+        return memberQueryService.patchMissionStatus(memberMissionId);
     }
 }

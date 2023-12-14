@@ -6,6 +6,8 @@ import org.springframework.http.HttpStatus;
 import umc.study.apiPayload.code.BaseErrorCode;
 import umc.study.apiPayload.code.ErrorReasonDTO;
 
+import javax.persistence.criteria.CriteriaBuilder;
+
 @Getter
 @AllArgsConstructor
 public enum ErrorStatus implements BaseErrorCode {
@@ -19,6 +21,8 @@ public enum ErrorStatus implements BaseErrorCode {
     NICKNAME_NOT_EXIST(HttpStatus.BAD_REQUEST,"MEMBER4002", "닉네임은 필수 입니다."),
     // 멤버 선호 음식
     FOOD_CATEGORY_NOT_FOUND(HttpStatus.BAD_REQUEST,"PREFER4001","음식 카테고리가 없습니다."),
+    // 유저 미션
+    ACCEPT_MISSION_NOT_FOUND(HttpStatus.BAD_REQUEST,"USERMISSION4001","유저가 수락한 미션이 없습니다."),
     //식당 관련 응답
     STORE_NOT_FOUND(HttpStatus.BAD_REQUEST,"STORER4002","식당명은 필수 입니다."),
     STORE_NOT_EXIST(HttpStatus.BAD_REQUEST,"STORE4001", "식당이 없습니다."),
@@ -27,10 +31,10 @@ public enum ErrorStatus implements BaseErrorCode {
     //미션 관련 응답
     MISSION_NOT_EXIST(HttpStatus.BAD_REQUEST,"MISSION4001", "미션이 없습니다."),
     Mission_Already_Accept(HttpStatus.BAD_REQUEST,"MISSION4002", "이미 수락한 미션입니다."),
+    MISSION_COMPLETE(HttpStatus.BAD_REQUEST,"MISSION4003", "이미 완료한 미션입니다."),
     // 예시 ...
     ARTICLE_NOT_FOUND(HttpStatus.NOT_FOUND, "ARTICLE4001", "게시글이 없습니다."),
     TEMP_EXCEPTION(HttpStatus.BAD_REQUEST,"TEMP40001","이거는 테스트");
-
 
     private final HttpStatus httpStatus;
     private final String code;

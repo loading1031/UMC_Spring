@@ -6,12 +6,15 @@ import org.springframework.transaction.annotation.Transactional;
 import umc.study.apiPayload.code.status.ErrorStatus;
 import umc.study.apiPayload.exception.handler.FoodCategoryHandler;
 import umc.study.apiPayload.exception.handler.MemberHandler;
+import umc.study.apiPayload.exception.handler.MemberMissionHandler;
 import umc.study.converter.member.MemberConverter;
 import umc.study.converter.member.MemberPreferConverter;
 import umc.study.domain.FoodCategory;
 import umc.study.domain.Member;
+import umc.study.domain.mapping.MemberMission;
 import umc.study.domain.mapping.MemberPrefer;
 import umc.study.repository.FoodCategoryRepository;
+import umc.study.repository.MemberMissionRepository;
 import umc.study.repository.MemberRepository;
 import umc.study.web.dto.member.MemberRequestDTO;
 
@@ -25,6 +28,7 @@ import java.util.stream.Collectors;
 public class MemberCommandServiceImpl implements MemberCommandService{
     private final MemberRepository memberRepository;
     private final FoodCategoryRepository foodCategoryRepository;
+    private final MemberMissionRepository memberMissionRepository;
     @Override
     @Transactional
     public Member joinMember(MemberRequestDTO.JoinDTO request){
@@ -51,5 +55,11 @@ public class MemberCommandServiceImpl implements MemberCommandService{
     @Override
     public boolean isExistCategorry(Long foodCategory) {
         return foodCategoryRepository.existsById(foodCategory);
+    }
+
+    @Override
+    public MemberMission getMemberMission(Long memberMissionId) {
+        return memberMissionRepository.findById(memberMissionId)
+                .orElseThrow(()->new MemberMissionHandler(ErrorStatus.ACCEPT_MISSION_NOT_FOUND));
     }
 }

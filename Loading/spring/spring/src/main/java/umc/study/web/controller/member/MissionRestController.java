@@ -54,5 +54,10 @@ public class MissionRestController {
         MemberMission memberMission = memberQueryService.acceptMission(request);
         return ApiResponse.onSuccess(MemberMissionConverter.toAcceptMissionResultDTO(memberMission));
     }
+    @GetMapping("/{memberMissionId}")
+    public ApiResponse<Long> verificationCode
+            (@PathVariable(name = "memberId") Long memberId, @PathVariable(name = "memberMissionId") Long memberMissionId){
+        return ApiResponse.onSuccess(memberMissionId);
+    }
 }
 

@@ -12,15 +12,19 @@ import org.springframework.data.domain.Page;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import umc.study.apiPayload.ApiResponse;
+import umc.study.converter.member.MemberMissionConverter;
 import umc.study.converter.store.mission.MissionConverter;
 import umc.study.converter.store.StoreConverter;
 import umc.study.domain.Mission;
 import umc.study.domain.Review;
 import umc.study.domain.Store;
+import umc.study.domain.mapping.MemberMission;
 import umc.study.service.StoreService.StoreCommandService;
 import umc.study.service.StoreService.StoreQueryService;
 import umc.study.service.missionService.MissionCommandService;
 import umc.study.validation.annotation.ExistStore;
+import umc.study.validation.annotation.IsCompleteMission;
+import umc.study.web.dto.member.MemberResponseDTO;
 import umc.study.web.dto.store.StoreRequestDTO;
 import umc.study.web.dto.store.StoreResponseDTO;
 
@@ -34,14 +38,14 @@ public class StoreRestController {
     private final StoreCommandService storeCommandService;
     private final MissionCommandService missionCommandService;
     private final StoreQueryService storeQueryService;
-/*
+
     @PostMapping("")
     public ApiResponse<StoreResponseDTO.JoinResultDTO>
     storeJoin(@RequestBody @Valid StoreRequestDTO.JoinDTO request){
         Store store = storeCommandService.joinStore(request);
         return ApiResponse.onSuccess(StoreConverter.toJoinResultDTO(store));
     }
- */
+
     @PostMapping("/review")
     public ApiResponse<StoreResponseDTO.CreateReviewResultDTO> write(@RequestBody @Valid StoreRequestDTO.ReveiwDTO request){
         Review review = storeQueryService.toReview(request);
@@ -74,5 +78,12 @@ public class StoreRestController {
             (@ExistStore @PathVariable(name = "storeId") Long storeId, @RequestParam(name = "page") Integer page){
         Page<Review> reviewList = storeQueryService.getReviewList(storeId, page);
         return ApiResponse.onSuccess(StoreConverter.reviewPreViewListDTO(reviewList));
+    }
+
+    @PatchMapping("/userMission/{memberMissionId}/complete")
+    public ApiResponse<MemberResponseDTO.CompleteMissionResultDTO> completeMission
+            (@IsCompleteMission @PathVariable (name = "memberMissionId") Long memberMissionId){
+        MemberMission memberMission = storeQueryService.patchMissionStatus(memberMissionId);
+        return ApiResponse.onSuccess(MemberMissionConverter.toCompleteMissionResultDTO(memberMission));
     }
 }

@@ -51,4 +51,15 @@ public class MemberResponseDTO {
         Boolean isFirst;
         Boolean isLast;
     }
+    @Builder
+    @Getter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class CompleteMissionResultDTO {
+        String missionSpec;
+        Integer point;
+        MissionStatus status;
+        LocalDate deadline;
+        LocalDateTime updatedAt;
+    }
 }

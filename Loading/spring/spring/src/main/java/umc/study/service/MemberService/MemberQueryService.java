@@ -9,7 +9,9 @@ import umc.study.web.dto.member.MemberRequestDTO;
 
 public interface MemberQueryService {
     MemberMission acceptMission(MemberRequestDTO.AcceptMissionDTO request);
+    MemberMission patchMissionStatus(Long memberMissionId);
      boolean isAcceptMssion(MemberRequestDTO.AcceptMissionDTO request);
     Page<Review> getReviewList(Long memberId, Integer page);
     Page<MemberMission> getAcceptMissionList(Long memberId, Integer page);
+
 }

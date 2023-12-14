@@ -57,4 +57,14 @@ public class MemberMissionConverter {
                 .totalPage(request.getTotalPages())
                 .build();
     }
+
+    public static MemberResponseDTO.CompleteMissionResultDTO toCompleteMissionResultDTO(MemberMission memberMission) {
+        return MemberResponseDTO.CompleteMissionResultDTO.builder()
+                .missionSpec(memberMission.getMission().getMissionSpec())
+                .deadline(memberMission.getMission().getDeadline())
+                .point(memberMission.getMission().getReward())
+                .updatedAt(memberMission.getUpdatedAt())
+                .status(memberMission.getStatus())
+                .build();
+    }
 }
