@@ -7,8 +7,7 @@ import umc.study.domain.Store;
 import umc.study.web.dto.store.StoreRequestDTO;
 
 public interface MissionCommandService {
-    public Mission toMission(StoreRequestDTO.MissionDTO request);
-    public Mission getMission(Long id);
-
+    Mission toMission(StoreRequestDTO.MissionDTO request);
+    Mission getMission(Long id);
     Page<Mission> findAllByStore(Store store, PageRequest pageRequest);
 }
