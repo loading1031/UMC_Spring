@@ -21,8 +21,8 @@ public class PageCheckValidator implements ConstraintValidator<CheckPage, Intege
         if (!valid) {
 
             context.disableDefaultConstraintViolation();
-            //context.buildConstraintViolationWithTemplate(ErrorStatus.PAGE_NOT_FOUND.toString()).addConstraintViolation();
-            throw new ConstraintViolationException("Page should be a positive integer.", Set.of());
+            context.buildConstraintViolationWithTemplate(ErrorStatus.PAGE_NOT_FOUND.toString()).addConstraintViolation();
+            //throw new ConstraintViolationException("Page should be a positive integer.", Set.of());
         }
         return valid;
     }
