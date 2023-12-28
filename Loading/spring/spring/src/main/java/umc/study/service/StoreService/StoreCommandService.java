@@ -8,7 +8,6 @@ import umc.study.web.dto.store.StoreResponseDTO;
 
 public interface StoreCommandService {
     Store joinStore(StoreRequestDTO.JoinDTO request);
-    //public Store getStore(Long id);
     Store getStore(Long id);
     boolean isStore(Long id);
 }

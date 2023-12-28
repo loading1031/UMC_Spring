@@ -13,16 +13,12 @@ import java.util.Set;
 @Component
 @RequiredArgsConstructor
 public class PageCheckValidator implements ConstraintValidator<CheckPage, Integer> {
-
     @Override
     public boolean isValid(Integer value, ConstraintValidatorContext context) {
         boolean valid = (value >= 1);
-
         if (!valid) {
-
             context.disableDefaultConstraintViolation();
             context.buildConstraintViolationWithTemplate(ErrorStatus.PAGE_NOT_FOUND.toString()).addConstraintViolation();
-            //throw new ConstraintViolationException("Page should be a positive integer.", Set.of());
         }
         return valid;
     }
